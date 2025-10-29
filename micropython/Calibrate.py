@@ -76,21 +76,16 @@ def calibrate(panel: Panel, num_elements: int):
         while not panel.is_stopped():
             interval_us = panel.step()
             time.sleep_us(interval_us)
-
-        position = position + 1
-
+        
     return step
-
 
 def calculate_offsets():
     a_steps = [
-        53, 51, 34, 37, 23, 53, 58, 61, 59, 50, 41, 44,
-        37, 45, 61, 27, 31, 17, 67, 45, 39, 39, 43, 46
+        35, 20, 8, 13, 1, 8, 11, 27
     ]
 
     three_steps = [
-        1379, 1369, 1354, 1359, 1347, 1366, 1389, 1384, 1374, 1371, 1369, 1361,
-        1362, 1369, 1380, 1349, 1344, 1351, 1387, 1363, 1364, 1363, 1369, 1368
+        1500, 1479, 1462, 1467, 1469, 1475, 1461, 1506
     ]
 
     assert len(a_steps) == len(three_steps), "Mismatch in input lengths."
@@ -102,3 +97,7 @@ def calculate_offsets():
         average = round((offset_a + offset_3) / 2)
         offsets.append(average)
     print("display_offsets =", offsets)
+
+
+
+

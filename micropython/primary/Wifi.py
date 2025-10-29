@@ -8,7 +8,7 @@ try:
 except ImportError:
     pass
 
-from secret import WIFI
+# from secret import WIFI
 
 
 def with_backoff(f: Callable, max_retries=5, initial_delay=1, max_delay=60):

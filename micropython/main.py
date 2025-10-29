@@ -39,28 +39,36 @@ UART_FRAME_TIMEOUT_MS = const(200)
 
 uart_upstream = UartMessage(
     UartFrame(
-        UART(1,
-             baudrate=UART_BAUD_RATE,
-             tx=Pin(4, Pin.IN, Pin.PULL_UP),
-             rx=Pin(5, Pin.OUT, Pin.PULL_UP),
-             timeout=UART_CHAR_TIMEOUT_MS)))
+        UART(
+            1,
+            baudrate=UART_BAUD_RATE,
+            tx=Pin(4, Pin.IN, Pin.PULL_UP),
+            rx=Pin(5, Pin.OUT, Pin.PULL_UP),
+            timeout=UART_CHAR_TIMEOUT_MS,
+        )
+    )
+)
 
 uart_downstream = UartMessage(
     UartFrame(
-        UART(0,
-             baudrate=UART_BAUD_RATE,
-             tx=Pin(16, Pin.IN, Pin.PULL_UP),
-             rx=Pin(17, Pin.OUT, Pin.PULL_UP),
-             timeout=UART_CHAR_TIMEOUT_MS)))
+        UART(
+            0,
+            baudrate=UART_BAUD_RATE,
+            tx=Pin(16, Pin.IN, Pin.PULL_UP),
+            rx=Pin(17, Pin.OUT, Pin.PULL_UP),
+            timeout=UART_CHAR_TIMEOUT_MS,
+        )
+    )
+)
 
 # panel and element
-panel = Panel([
-    ElementGpio(2, 28, 27, 26, 22, reverse_direction=False),
-    ElementGpio(14, 18, 19, 20, 21, reverse_direction=False),
-    ElementGpio(1, 9, 8, 7, 6, reverse_direction=False),
-    ElementGpio(15, 10, 11, 12, 13, reverse_direction=False),
-    ElementUart(uart_downstream)
-])
+panel = Panel(
+    [
+        ElementGpio(15, 9, 8, 7, 6, reverse_direction=True),  # Motor D with sensor D
+        ElementGpio(2, 10, 11, 12, 13, reverse_direction=True),  # Motor C with sensor B
+        ElementUart(uart_downstream),
+    ]
+)
 
 
 def downstream_machine_reset():
@@ -68,11 +76,12 @@ def downstream_machine_reset():
     uart_downstream.send_machine_reset(seq)
     # TODO wait for ack
 
+
 @micropython.native
 def main_loop(source: Source):
     # loop metrics
     loop_buffer_size = 1000
-    loop_buffer = array('i', [0] * loop_buffer_size)
+    loop_buffer = array("i", [0] * loop_buffer_size)
     loop_buffer_index = 0
 
     interval_us = 0
@@ -97,15 +106,21 @@ def main_loop(source: Source):
 
             # loop metrics
             loop_average_time = sum(loop_buffer) / loop_buffer_size
-            loop_variance = sum((x - loop_average_time) ** 2 for x in loop_buffer) / (loop_buffer_size - 1)
+            loop_variance = sum((x - loop_average_time) ** 2 for x in loop_buffer) / (
+                loop_buffer_size - 1
+            )
             loop_std_deviation = math.sqrt(loop_variance)
-            print("loop: {:.2f}us +/-{:.2f}; interval {}us".format(loop_average_time, loop_std_deviation, interval_us))
+            print(
+                "loop: {:.2f}us +/-{:.2f}; interval {}us".format(
+                    loop_average_time, loop_std_deviation, interval_us
+                )
+            )
 
             neopixel.fill((randint(0, 255), randint(0, 255), randint(0, 255)))
             neopixel.write()
 
             gc.collect()
-            print('mem_free:', gc.mem_free())
+            print("mem_free:", gc.mem_free())
 
         interval_us = panel.step()
 
@@ -123,8 +138,9 @@ def main_loop(source: Source):
 if is_picow:
     import Config
     from primary.Display import Display
-    from primary.SourceHttpd import SourceHttpd
-    from provider.Clock import Clock
+    # from primary.SourceHttpd import SourceHttpd
+    from primary.SourceMQTT import SourceMQTT
+    # from provider.Clock import Clock
     from primary.Wifi import Wifi
 
     wifi = Wifi()
@@ -134,8 +150,9 @@ if is_picow:
     time.sleep_ms(1000)
 
     display = Display(Config.display_order, Config.display_offsets)
-    clock = Clock.timezone(Config.default_timezone)
-    board_source = SourceHttpd(wifi, display, Config.providers, clock, 80)
+    # clock = Clock.timezone(Config.default_timezone)
+    # board_source = SourceHttpd(wifi, display, Config.providers, clock, 80)
+    board_source = SourceMQTT(display, Config.providers)
 else:
     board_source = SourceUart(uart_upstream)
 

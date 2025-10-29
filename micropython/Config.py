@@ -10,13 +10,10 @@ from provider.ProviderWordClock import ProviderWordClock
 default_timezone = "Europe/Stockholm"
 
 # element order when displaying alphabet
-# display_order = ['abcdefghij','klmnopqrst']
-display_order = ['vurqnmjifeba',
-                 'xwtspolkhgdc']
+display_order = ['abcd', 'efgh']
 
 # flap offsets in display order for calibration
-display_offsets = [11, 5, -12, -8, -21, 4, 18, 17, 11, 5, 0, -3,
-                   -6, 2, 15, -18, -18, -22, 22, -2, -4, -5, 1, 2]
+display_offsets = [-39, -5, -31, -2, -43, -19, -20, 92]
 
 providers = {
     "{CLOCK_STO}": ProviderClock("STO  %H:%M    %d.%m.%Y", "Europe/Stockholm"),

@@ -6,3 +6,5 @@ Split flap module driver designed for https://www.printables.com/model/69464-spl
 
 https://user-images.githubusercontent.com/890714/215321878-f9f15342-425b-4259-aaf5-0f672f7ed2bf.mov
 
+<!-- Provide information about the layout for the downstream modules -->
+<!-- Mention that this forked from the original -->
