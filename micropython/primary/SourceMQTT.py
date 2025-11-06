@@ -35,7 +35,7 @@ class SourceMQTT(Source):
                 # or ERROR signifying that it's over an ocean, these will be displayed
                 # by the split flap
                 if decoded_mqtt_message == "whereami":
-                    self.current_mqtt['text'] = iss_location()
+                    self.current_mqtt_message['text'] = iss_location()
 
                 # Reset the split flap display by showing the empty character
                 elif decoded_mqtt_message == "reset":
