@@ -86,6 +86,3 @@ class SourceMQTT(Source):
 
         return None
  
-    # TODO: 
-    # Sort out function comments
-    # Move calibration_test.py into Calibrate.py

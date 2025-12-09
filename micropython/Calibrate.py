@@ -8,6 +8,7 @@ from primary.Display import Display
 from StepperMotor import STEPS_PER_REVOLUTION
 from Message import _STEPS_PER_LETTER, LETTERS, _letter_position
 
+from ElementGpio import ElementGpio
 
 """
 Split-Flap Display Calibration
@@ -99,5 +100,19 @@ def calculate_offsets():
     print("display_offsets =", offsets)
 
 
+# Define panel and element(s)
+panel = Panel([
+    #ElementGpio(2, 18, 19, 20, 21, reverse_direction=True), # Motor B with sensor B
+    ElementGpio(1, 9, 8, 7, 6, reverse_direction=True), # Motor D with sensor C
+])
 
+# Specify number of elements to calibrate in the panel. The current panel has 2 elements, so both can be calibrated
+# at once. But it's better to calibrate one element at a time, comment out the other element
+step = calibrate(panel, num_elements=1)
+
+# Specify number of steps for the stepper motor to run
+step(1520)
+
+# Calculate offsets
+calculate_offsets()
 
