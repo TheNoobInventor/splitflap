@@ -138,9 +138,7 @@ def main_loop(source: Source):
 if is_picow:
     import Config
     from primary.Display import Display
-    # from primary.SourceHttpd import SourceHttpd
     from primary.SourceMQTT import SourceMQTT
-    # from provider.Clock import Clock
     from primary.Wifi import Wifi
 
     wifi = Wifi()
@@ -150,8 +148,6 @@ if is_picow:
     time.sleep_ms(1000)
 
     display = Display(Config.display_order, Config.display_offsets)
-    # clock = Clock.timezone(Config.default_timezone)
-    # board_source = SourceHttpd(wifi, display, Config.providers, clock, 80)
     board_source = SourceMQTT(display, Config.providers)
 else:
     board_source = SourceUart(uart_upstream)

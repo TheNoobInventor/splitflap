@@ -106,8 +106,8 @@ panel = Panel([
     ElementGpio(1, 9, 8, 7, 6, reverse_direction=True), # Motor D with sensor C
 ])
 
-# Specify number of elements to calibrate in the panel. The current panel has 2 elements, so both can be calibrated
-# at once. But it's better to calibrate one element at a time, comment out the other element
+# Specify number of elements to calibrate in the panel with num_elements. The current panel has 2 elements, so both can be calibrated
+# at once. But it's advisable to focus on one at a time
 step = calibrate(panel, num_elements=1)
 
 # Specify number of steps for the stepper motor to run

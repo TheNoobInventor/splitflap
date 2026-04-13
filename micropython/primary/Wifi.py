@@ -48,4 +48,5 @@ class Wifi:
                     self.is_connected = False
                     print("wifi disconnected")
 
+                # Change me
                 self.wlan.connect(WIFI["SSID"], WIFI["PASSWORD"])

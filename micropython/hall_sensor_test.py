@@ -1,9 +1,11 @@
-# Hall sensor test to determine how to place the magnet to trigger the sensor
+# Python script used to determine the magnet polarity that triggers the hall effect sensor
 
 from machine import Pin, Timer
 from time import sleep
-# Initialization of GPIO14 as input
+
+# Initialize GPIO14 pin as input
 sensor = Pin(1, Pin.IN, Pin.PULL_DOWN)
+
 # Continuous loop for continuous serial output
 while True:
     if sensor.value() == 0:

@@ -5,8 +5,9 @@ import ujson
 This function gets the country location the ISS is flying over by first obtaining the ISS
 longitude and latitude using the Open Notify API.
 
-Reverse geocoding these coordinates returns the country the ISS is currently over, otherwise the ISS is
-over an ocean in which case an error message is returned.
+Reverse geocoding these coordinates returns the country the ISS is currently over. Otherwise if the reverse
+geocoding API returns an error response with statuc code 404, the ISS is over a water body. If any other error 
+is encountered, that will also be printed out with an accompanying message for the error code. 
 """
 
 
@@ -18,7 +19,7 @@ def iss_location() -> str:
         data = response.json()
         iss_lat = float(data["iss_position"]["latitude"])
         iss_long = float(data["iss_position"]["longitude"])
-        print(iss_lat, iss_long)
+        print("\nISS latitude:", iss_lat, "\n", "   longitude:", iss_long)
 
     except Exception as e:
         print(f"Error getting ISS position: {e}")
@@ -40,7 +41,7 @@ def iss_location() -> str:
 
     except Exception as e:
         if response.status_code == 404:
-            print("No location found - ISS is over an ocean")
+            print("\nNo location found - ISS is over an ocean")
         else:
             print(f"API Error: {response.status_code}")
         return "ERROR"
