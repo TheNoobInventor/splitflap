@@ -6,7 +6,7 @@ The YouTube video below walks through the process of configuring the split flap 
 
 <!-- Change link after we've uploaded it -->
 <p align="center">
-  <a href="https://youtu.be/">
+  <a href="https://youtu.be/Dnaxnct0BiM">
     <img src="images/thumbnail.png" width="50%">
   </a>
 </p>
@@ -310,7 +310,7 @@ who was very helpful in assisting me solve some issues I had with the code and m
 - [Oatfoundry](https://www.oatfoundry.com)
 - [Vestaboard](https://www.vestaboard.com)
 
-### Stepper motor links
+### Stepper motor related
 - [What is a Stepper Motor?](https://www.youtube.com/watch?v=fQsdUhRwCU4)
 - [Stepper Motors](https://www.omega.co.uk/prodinfo/stepper_motors.html)
 - [Stepper Motor: Technology and Applications](https://www.festo.com/gb/en/e/about-festo/blog/in-practice/stepper-motor-technology-and-applications-id_3766930/)
